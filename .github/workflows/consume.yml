@@ -24,6 +24,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: vinay-personal-org/test-action@v1
-      - uses: vinay-personal-org/priv-test-action@main
+      - uses: vinay-personal-org/priv-test-action@3.0.0
         with:
           who-to-greet: 'Mona the Octocat'
