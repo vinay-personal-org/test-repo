@@ -29,6 +29,6 @@ jobs:
        - uses: vinay-personal-org/test-action@v2.0.3
          with:
           who-to-greet: 'Mona the Octocat'
-       - uses: vinay-personal-org/test-action@v2.0.2
+       - uses: vinay-personal-org/test-action@v2.*
          with:
           who-to-greet: 'Mona the Octocat'
