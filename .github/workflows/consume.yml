@@ -70,7 +70,7 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Restore cache
-      uses: actions/cache@v2
+      uses: vinay-personal-org/cache@v2
       with:
         path: |
           file1.txt
@@ -83,7 +83,7 @@ jobs:
         echo "Building project..."
       
     - name: Save cache
-      uses: actions/cache@v2
+      uses: vinay-personal-org/cache@v2
       with:
         path: |
           file1.txt
