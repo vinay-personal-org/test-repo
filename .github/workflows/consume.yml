@@ -75,7 +75,6 @@ jobs:
         path: |
           file1.txt
           file2.txt
-          some_directory
         key: ${{ runner.os }}-generic-${{ hashFiles('file1.txt', 'file2.txt', 'some_directory') }}
         
     - name: Build project
@@ -89,5 +88,4 @@ jobs:
         path: |
           file1.txt
           file2.txt
-          some_directory
         key: ${{ runner.os }}-generic-${{ hashFiles('file1.txt', 'file2.txt', 'some_directory') }}
