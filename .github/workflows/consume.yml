@@ -14,27 +14,51 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
+#jobs:
   # This workflow contains a single job called "build"
-  build:
+  #build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+    #steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       # - uses: vinay-personal-org/test-action@v1
       # - uses: vinay-personal-org/priv-test-action@3.0.0
       #- uses: vinay-personal-org/priv-test-action@3.0.0
-       - uses: vinay-personal-org/test-action@v2
-         with:
-          who-to-greet: 'Mona the Octocat'
-       - uses: vinay-personal-org/test-action@2.1.0-alpha
-         with:
-          who-to-greet: 'Mona the Octocat'
-       - uses: vinay-personal-org/test-action@v2.*
-         with:
-          who-to-greet: 'Mona the Octocat'
-       - uses: vinay-personal-org/test-action@2.*
-         with:
-          who-to-greet: 'Mona the Octocat'
+      # - uses: vinay-personal-org/test-action@v2
+      #   with:
+      #    who-to-greet: 'Mona the Octocat'
+      # - uses: vinay-personal-org/test-action@2.1.0-alpha
+      #   with:
+      #    who-to-greet: 'Mona the Octocat'
+      # - uses: vinay-personal-org/test-action@v2.*
+      #   with:
+      #     who-to-greet: 'Mona the Octocat'
+      # - uses: vinay-personal-org/test-action@2.*
+      #   with:
+      #    who-to-greet: 'Mona the Octocat'
+jobs:
+       generate:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Create text file
+          run: echo "This is a sample text file" > sample.txt
+
+        - name: Upload artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: sample-file
+            path: sample.txt
+
+       process:
+        needs: generate
+        runs-on: ubuntu-latest
+        steps:
+        - name: Download artifact
+          uses: actions/download-artifact@v2
+          with:
+            name: sample-file
+
+        - name: Read file contents
+          run: cat sample.txt
