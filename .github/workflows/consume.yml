@@ -38,27 +38,56 @@ on:
       # - uses: vinay-personal-org/test-action@2.*
       #   with:
       #    who-to-greet: 'Mona the Octocat'
+# jobs:
+#       generate:
+#        runs-on: ubuntu-latest
+#        steps:
+#       - name: Create text file
+#          run: echo "This is a sample text file" > sample.txt
+#
+#        - name: Upload artifact
+#          uses: vinay-personal-org/upload-artifact@v2
+#          with:
+#            name: sample-file
+#            path: sample.txt
+#
+#       process:
+#        needs: generate
+#       runs-on: ubuntu-latest
+#        steps:
+#        - name: Download artifact
+#          uses: vinay-personal-org/download-artifact@v2
+#          with:
+#            name: sample-file
+
+#        - name: Read file contents
+#          run: cat sample.txt
 jobs:
-       generate:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Create text file
-          run: echo "This is a sample text file" > sample.txt
-
-        - name: Upload artifact
-          uses: vinay-personal-org/upload-artifact@v2
-          with:
-            name: sample-file
-            path: sample.txt
-
-       process:
-        needs: generate
-        runs-on: ubuntu-latest
-        steps:
-        - name: Download artifact
-          uses: vinay-personal-org/download-artifact@v2
-          with:
-            name: sample-file
-
-        - name: Read file contents
-          run: cat sample.txt
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Restore cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          file1.txt
+          file2.txt
+          some_directory
+        key: ${{ runner.os }}-generic-${{ hashFiles('file1.txt', 'file2.txt', 'some_directory') }}
+        
+    - name: Build project
+      run: |
+        # Replace this with your build commands
+        echo "Building project..."
+      
+    - name: Save cache
+      uses: actions/cache@v2
+      with:
+        path: |
+          file1.txt
+          file2.txt
+          some_directory
+        key: ${{ runner.os }}-generic-${{ hashFiles('file1.txt', 'file2.txt', 'some_directory') }}
