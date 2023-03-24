@@ -9,15 +9,31 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Cache Primes
-      id: cache-primes
-      uses: actions/cache@v3
+   # - name: Cache Primes
+   #   id: cache-primes
+   #   uses: actions/cache@v3
+   #   with:
+   #     path: prime-numbers
+   #     key: ${{ runner.os }}-primes
+
+    - name: Restore cached Primes
+      id: cache-primes-restore
+      uses: actions/cache/restore@v3
       with:
         path: prime-numbers
         key: ${{ runner.os }}-primes
 
     - name: Generate Prime Numbers
-      if: steps.cache-primes.outputs.cache-hit != 'true'
+      if: steps.cache-primes-restore.outputs.cache-hit != 'true'
       run:  echo "1 3 5 7 9" >> prime-numbers
 
+    - name: Save Primes
+      id: cache-primes-save
+      uses: actions/cache/save@v3
+      with:
+        path: prime-numbers
+        key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
+        
+    - name: Display primes
+      run: cat prime-numbers 
 
