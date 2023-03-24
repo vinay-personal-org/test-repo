@@ -9,20 +9,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Restore cached Primes
-      id: cache-primes-restore
-      uses: actions/cache/restore@v3
+    - name: Cache Primes
+      id: cache-primes
+      uses: actions/cache@v3
       with:
-        path: |
-          path/to/dependencies
-          some/other/dependencies
+        path: prime-numbers
         key: ${{ runner.os }}-primes
 
-    - name: Save Primes
-      id: cache-primes-save
-      uses: actions/cache/save@v3
-      with:
-        path: |
-          path/to/dependencies
-          some/other/dependencies
-        key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
+    - name: Generate Prime Numbers
+      if: steps.cache-primes.outputs.cache-hit != 'true'
+      run: /generate-primes.sh -d prime-numbers
+
+    - name: Use Prime Numbers
+      run: /primes.sh -d prime-numbers
