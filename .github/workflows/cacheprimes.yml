@@ -18,7 +18,7 @@ jobs:
 
     - name: Restore cached Primes
       id: cache-primes-restore
-      uses: actions/cache/restore@v3
+      uses: vinay-personal-org/cache/restore@v3
       with:
         path: prime-numbers
         key: ${{ runner.os }}-primes
@@ -29,7 +29,7 @@ jobs:
 
     - name: Save Primes
       id: cache-primes-save
-      uses: actions/cache/save@v3
+      uses: vinay-personal-org/cache/save@v3
       with:
         path: prime-numbers
         key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
